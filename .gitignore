@@ -1,0 +1,13 @@
+# Claude plugin local settings
+.claude/*.local.md
+
+# Editor/IDE
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
