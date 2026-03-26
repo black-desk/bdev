@@ -1,7 +1,11 @@
 ---
 name: backport-dependency-analyzer
 description: |
-  Use this agent when the user asks to backport multiple commits, mentions "分析commit依赖", "backport依赖分析", "commit dependency", or wants to understand which commits must be backported together. This agent's core task is to analyze the target commits and identify **additional dependencies** that must also be backported for a successful backport. Examples:
+  Use this agent when the user asks to backport multiple commits, mentions "分析commit依赖", "backport依赖分析", "commit dependency", or wants to understand which commits must be backported together.
+
+  **Core Task**: This agent must read the patches (diff content) of target commits to identify all symbols used (functions, macros, structures, variables, etc.), then check if these symbols exist in the target branch. For symbols that are missing or different in the target branch, find which commits introduced or modified those symbols in the source branch - those commits are the additional dependencies that must also be backported.
+
+  Examples:
 
   <example>
   Context: User is working on backporting features from main to a stable branch
