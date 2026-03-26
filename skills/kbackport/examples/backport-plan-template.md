@@ -86,9 +86,10 @@ Date:   [date]
 
 ### Phase 2: Environment Preparation (After Plan Approval, Before Execution)
 
+> **Note**: User provides two separate worktrees - target worktree and reference worktree. No `git checkout` needed.
+
 ```bash
-# 1. Configure and verify target branch compiles
-git checkout [target-branch]
+# 1. In target worktree: configure and verify compilation
 # Configure kernel build (choose appropriate method):
 #   - cp /boot/config-$(uname -r) .config  # copy existing config
 #   - make defconfig                        # default config
@@ -96,21 +97,16 @@ git checkout [target-branch]
 make olddefconfig  # update/apply config
 make -j$(nproc)    # must compile successfully
 
-# 2. Configure and verify reference branch compiles
-git checkout [reference-branch]
+# 2. In reference worktree: configure and verify compilation
 # Configure kernel build (same options as above)
 make olddefconfig  # update/apply config
 make -j$(nproc)    # must compile successfully
-
-# 3. Return to target branch and create working branch
-git checkout [target-branch]
-git checkout -b backport/[feature-name]-[date]
 ```
 
 ### Phase 3: Cherry-pick Execution
 
 ```bash
-# Cherry-pick in order (with -x to record origin)
+# In target worktree, cherry-pick in order (with -x to record origin)
 git cherry-pick -x abc12345
 git cherry-pick -x def67890
 git cherry-pick -x target001

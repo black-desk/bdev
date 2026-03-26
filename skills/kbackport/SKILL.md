@@ -33,11 +33,13 @@ Guide for backporting commits between Linux kernel branches with careful depende
 
 ### Phase 2: Environment Preparation (After Plan Approval)
 
-**After reviewing the commits to be backported**, configure and verify both branches can compile successfully:
+**After reviewing the commits to be backported**, configure and verify both worktrees can compile successfully:
 
-1. **Configure and verify target branch**:
+> **Note**: User should provide two separate worktrees - one for the target branch and one for the reference branch. No `git checkout` operations are needed.
+
+1. **Configure and verify target worktree**:
    ```bash
-   git checkout <target-branch>
+   # In target worktree directory
    # Step 1: Configure kernel build
    # Options include:
    #   - Copy existing config: cp /boot/config-$(uname -r) .config
@@ -49,18 +51,18 @@ Guide for backporting commits between Linux kernel branches with careful depende
    make -j$(nproc)
    ```
 
-2. **Configure and verify reference branch**:
+2. **Configure and verify reference worktree**:
    ```bash
-   git checkout <reference-branch>
+   # In reference worktree directory
    # Step 1: Configure kernel build (same options as above)
    make olddefconfig  # or appropriate configuration method
    # Step 2: Verify the reference branch compiles successfully
    make -j$(nproc)
    ```
 
-3. **Document any issues**: If either branch fails to compile, fix the issues first or report to user before proceeding.
+3. **Document any issues**: If either worktree fails to compile, fix the issues first or report to user before proceeding.
 
-⚠️ **Configuration is a prerequisite for compilation verification**. Both branches must be properly configured and in a compilable state before starting backport execution. This establishes a known-good baseline.
+⚠️ **Configuration is a prerequisite for compilation verification**. Both worktrees must be properly configured and in a compilable state before starting backport execution. This establishes a known-good baseline.
 
 ### Phase 3: Execution (After Environment Ready)
 
