@@ -1,12 +1,12 @@
 ---
 name: backport-dependency-analyzer
 description: |
-  Use this agent when the user asks to backport multiple commits, mentions "分析commit依赖", "backport依赖分析", "commit dependency", or wants to understand which commits must be backported together. Examples:
+  Use this agent when the user asks to backport multiple commits, mentions "分析commit依赖", "backport依赖分析", "commit dependency", or wants to understand which commits must be backported together. This agent's core task is to analyze the target commits and identify **additional dependencies** that must also be backported for a successful backport. Examples:
 
   <example>
   Context: User is working on backporting features from main to a stable branch
   user: "我需要把main分支上的commit abc123和def456 backport到release-2.0分支"
-  assistant: "让我使用backport-dependency-analyzer来分析这些commit的依赖关系"
+  assistant: "让我使用backport-dependency-analyzer来分析这些commit的依赖关系，找出需要额外backport的依赖commit"
   <commentary>
   User wants to backport specific commits. The dependency analyzer should examine commit chains to identify any prerequisite commits that must also be backported.
   </commentary>
@@ -15,18 +15,18 @@ description: |
   <example>
   Context: User wants to backport a bug fix but is concerned about dependencies
   user: "这个功能在main分支上已经完成了，我需要把它backport到stable分支，但我担心会漏掉一些依赖的改动"
-  assistant: "我会使用backport-dependency-analyzer来全面分析需要backport的commit链，确保不会遗漏任何依赖"
+  assistant: "我会使用backport-dependency-analyzer来全面分析需要backport的commit链，找出目标commit依赖的额外commit"
   <commentary>
-  User is concerned about missing dependencies during backport. The agent should proactively analyze the full dependency chain.
+  User is concerned about missing dependencies during backport. The agent should proactively analyze the full dependency chain and identify any additional commits needed.
   </commentary>
   </example>
 
   <example>
   Context: User is comparing branches to understand backport scope
   user: "帮我把这几个commit从develop分支backport到hotfix分支：a1b2c3d, e4f5g6h, i7j8k9l"
-  assistant: "我来启动backport-dependency-analyzer来分析这些commit之间的依赖关系以及可能需要额外backport的相关commit"
+  assistant: "我来启动backport-dependency-analyzer来分析这些commit之间的依赖关系，找出需要额外backport的相关commit"
   <commentary>
-  User explicitly lists commits to backport. The agent should examine the commit graph and identify any prerequisite commits.
+  User explicitly lists commits to backport. The agent should examine the commit graph and identify any additional prerequisite commits that must also be backported.
   </commentary>
   </example>
 model: inherit
