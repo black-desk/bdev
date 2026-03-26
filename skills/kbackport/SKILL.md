@@ -13,6 +13,7 @@ Guide for backporting commits between Linux kernel branches with careful depende
 1. **Plan First, Execute Later**: Always generate a backport plan for user review before executing any cherry-pick operations
 2. **Commit-by-Commit Execution**: Process commits one at a time, ensuring each compiles before moving to the next
 3. **Proper Commit Messages**: Follow kernel backport conventions for every commit
+4. **Local Operations Only**: Never push to or pull from remote repositories during backport - all commits remain local until user explicitly decides to push
 
 ## Workflow
 
