@@ -16,32 +16,6 @@ Guide for backporting commits between Linux kernel branches with careful depende
 
 ## Workflow
 
-### Phase 0: Environment Preparation (Required)
-
-**Before any backport work**, ensure both target and reference branches are properly configured and can compile successfully:
-
-1. **Configure and verify target branch**:
-   ```bash
-   git checkout <target-branch>
-   # Configure kernel (e.g., copy existing config or run make defconfig/menuconfig)
-   make olddefconfig  # or appropriate configuration method
-   # Verify the target branch compiles successfully
-   make -j$(nproc)
-   ```
-
-2. **Configure and verify reference branch**:
-   ```bash
-   git checkout <reference-branch>
-   # Configure kernel
-   make olddefconfig  # or appropriate configuration method
-   # Verify the reference branch compiles successfully
-   make -j$(nproc)
-   ```
-
-3. **Document any issues**: If either branch fails to compile, fix the issues first or report to user before proceeding.
-
-⚠️ **Both branches must be in a compilable state before starting backport work**. This establishes a known-good baseline.
-
 ### Phase 1: Planning (Required)
 
 **Before any execution**, generate a backport plan using the template in `examples/backport-plan-template.md`:
@@ -57,7 +31,38 @@ Guide for backporting commits between Linux kernel branches with careful depende
 5. **Present plan to user for approval**
 6. **Only proceed after explicit user confirmation**
 
-### Phase 2: Execution (After Approval)
+### Phase 2: Environment Preparation (After Plan Approval)
+
+**After reviewing the commits to be backported**, configure and verify both branches can compile successfully:
+
+1. **Configure and verify target branch**:
+   ```bash
+   git checkout <target-branch>
+   # Step 1: Configure kernel build
+   # Options include:
+   #   - Copy existing config: cp /boot/config-$(uname -r) .config
+   #   - Use default config: make defconfig
+   #   - Interactive config: make menuconfig
+   #   - Update existing config: make olddefconfig
+   make olddefconfig  # or appropriate configuration method
+   # Step 2: Verify the target branch compiles successfully
+   make -j$(nproc)
+   ```
+
+2. **Configure and verify reference branch**:
+   ```bash
+   git checkout <reference-branch>
+   # Step 1: Configure kernel build (same options as above)
+   make olddefconfig  # or appropriate configuration method
+   # Step 2: Verify the reference branch compiles successfully
+   make -j$(nproc)
+   ```
+
+3. **Document any issues**: If either branch fails to compile, fix the issues first or report to user before proceeding.
+
+⚠️ **Configuration is a prerequisite for compilation verification**. Both branches must be properly configured and in a compilable state before starting backport execution. This establishes a known-good baseline.
+
+### Phase 3: Execution (After Environment Ready)
 
 Execute commits **one at a time** in the planned order:
 
@@ -123,7 +128,7 @@ For **each commit**:
 - Consider aborting: `git cherry-pick --abort`
 - Report the issue to user for guidance
 
-### Phase 3: Final Verification
+### Phase 4: Final Verification
 
 After all commits are backported:
 - Full kernel build
@@ -168,8 +173,8 @@ When conflicts occur:
 ## Quality Checklist
 
 Before finalizing:
-- [ ] Both target and reference branches configured and compile successfully (Phase 0)
-- [ ] Plan was reviewed and approved by user
+- [ ] Plan was reviewed and approved by user (Phase 1)
+- [ ] Both target and reference branches configured and compile successfully (Phase 2)
 - [ ] All commits processed one-by-one
 - [ ] Each commit: full kernel build passed before committing
 - [ ] Commit messages follow conventions

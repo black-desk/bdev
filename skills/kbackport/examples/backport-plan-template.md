@@ -84,17 +84,22 @@ Date:   [date]
 
 ## Execution Plan
 
-### Phase 0: Environment Preparation
+### Phase 2: Environment Preparation (After Plan Approval, Before Execution)
 
 ```bash
-# 1. Verify target branch compiles
+# 1. Configure and verify target branch compiles
 git checkout [target-branch]
-make olddefconfig  # or appropriate configuration method
+# Configure kernel build (choose appropriate method):
+#   - cp /boot/config-$(uname -r) .config  # copy existing config
+#   - make defconfig                        # default config
+#   - make menuconfig                       # interactive config
+make olddefconfig  # update/apply config
 make -j$(nproc)    # must compile successfully
 
-# 2. Verify reference branch compiles
+# 2. Configure and verify reference branch compiles
 git checkout [reference-branch]
-make olddefconfig  # or appropriate configuration method
+# Configure kernel build (same options as above)
+make olddefconfig  # update/apply config
 make -j$(nproc)    # must compile successfully
 
 # 3. Return to target branch and create working branch
@@ -102,7 +107,7 @@ git checkout [target-branch]
 git checkout -b backport/[feature-name]-[date]
 ```
 
-### Phase 1: Cherry-pick Execution
+### Phase 3: Cherry-pick Execution
 
 ```bash
 # Cherry-pick in order (with -x to record origin)
@@ -135,9 +140,11 @@ make -j$(nproc)
 
 ## Verification Checklist
 
-Before starting backport:
-- [ ] Target branch configured and compiles successfully
-- [ ] Reference branch configured and compiles successfully
+After plan approval, before starting execution:
+- [ ] Target branch kernel build configured (e.g., `make olddefconfig`)
+- [ ] Target branch compiles successfully (`make -j$(nproc)`)
+- [ ] Reference branch kernel build configured (e.g., `make olddefconfig`)
+- [ ] Reference branch compiles successfully (`make -j$(nproc)`)
 
 After completing the backport:
 
