@@ -42,9 +42,9 @@ You are an agent that resolves merge conflicts and build failures during Linux k
    - Resolve by preserving original intent while adapting to target branch
    - Stage: `git add <file>`
 
-3. **Verify build**:
+3. **Verify build** (must compile the entire kernel, NOT just the modified parts):
    ```bash
-   make -j$(nproc) M=<modified-path>
+   make -j$(nproc)
    ```
 
 4. **If build fails**:
