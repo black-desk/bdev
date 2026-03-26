@@ -103,6 +103,17 @@ make olddefconfig  # update/apply config
 make -j$(nproc)    # must compile successfully
 ```
 
+**Important**: Ensure Kconfig options related to the backport content are enabled before compiling. This guarantees the backported code will be built and can be properly verified.
+
+```bash
+# Check if specific config option is enabled
+grep CONFIG_[RELATED_OPTION] .config
+
+# Enable if needed
+./scripts/config --enable CONFIG_[RELATED_OPTION]
+make olddefconfig  # regenerate after changes
+```
+
 ### Phase 3: Cherry-pick Execution
 
 ```bash
@@ -137,10 +148,13 @@ make -j$(nproc)
 ## Verification Checklist
 
 After plan approval, before starting execution:
-- [ ] Target branch kernel build configured (e.g., `make olddefconfig`)
-- [ ] Target branch compiles successfully (`make -j$(nproc)`)
-- [ ] Reference branch kernel build configured (e.g., `make olddefconfig`)
-- [ ] Reference branch compiles successfully (`make -j$(nproc)`)
+- [ ] Identified Kconfig options related to backport content
+- [ ] Target worktree: relevant configs enabled
+- [ ] Target worktree: kernel build configured (e.g., `make olddefconfig`)
+- [ ] Target worktree: compiles successfully (`make -j$(nproc)`)
+- [ ] Reference worktree: relevant configs enabled
+- [ ] Reference worktree: kernel build configured (e.g., `make olddefconfig`)
+- [ ] Reference worktree: compiles successfully (`make -j$(nproc)`)
 
 After completing the backport:
 

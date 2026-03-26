@@ -60,7 +60,16 @@ Guide for backporting commits between Linux kernel branches with careful depende
    make -j$(nproc)
    ```
 
-3. **Document any issues**: If either worktree fails to compile, fix the issues first or report to user before proceeding.
+3. **Ensure relevant configs are enabled**: Before compilation, verify that Kconfig options related to the backport content are enabled. This ensures the backported code will actually be compiled and can be properly verified.
+
+   ```bash
+   # Check if specific config option is enabled
+   grep CONFIG_FOO .config
+   # Or use scripts/config tool
+   ./scripts/config --enable CONFIG_FOO
+   ```
+
+4. **Document any issues**: If either worktree fails to compile, fix the issues first or report to user before proceeding.
 
 ⚠️ **Configuration is a prerequisite for compilation verification**. Both worktrees must be properly configured and in a compilable state before starting backport execution. This establishes a known-good baseline.
 
@@ -176,7 +185,8 @@ When conflicts occur:
 
 Before finalizing:
 - [ ] Plan was reviewed and approved by user (Phase 1)
-- [ ] Both target and reference branches configured and compile successfully (Phase 2)
+- [ ] Kconfig options related to backport content identified and enabled (Phase 2)
+- [ ] Both target and reference worktrees configured and compile successfully (Phase 2)
 - [ ] All commits processed one-by-one
 - [ ] Each commit: full kernel build passed before committing
 - [ ] Commit messages follow conventions
