@@ -16,6 +16,32 @@ Guide for backporting commits between Linux kernel branches with careful depende
 
 ## Workflow
 
+### Phase 0: Environment Preparation (Required)
+
+**Before any backport work**, ensure both target and reference branches are properly configured and can compile successfully:
+
+1. **Configure and verify target branch**:
+   ```bash
+   git checkout <target-branch>
+   # Configure kernel (e.g., copy existing config or run make defconfig/menuconfig)
+   make olddefconfig  # or appropriate configuration method
+   # Verify the target branch compiles successfully
+   make -j$(nproc)
+   ```
+
+2. **Configure and verify reference branch**:
+   ```bash
+   git checkout <reference-branch>
+   # Configure kernel
+   make olddefconfig  # or appropriate configuration method
+   # Verify the reference branch compiles successfully
+   make -j$(nproc)
+   ```
+
+3. **Document any issues**: If either branch fails to compile, fix the issues first or report to user before proceeding.
+
+⚠️ **Both branches must be in a compilable state before starting backport work**. This establishes a known-good baseline.
+
 ### Phase 1: Planning (Required)
 
 **Before any execution**, generate a backport plan using the template in `examples/backport-plan-template.md`:
@@ -54,20 +80,11 @@ For **each commit**:
 
 3. **Verify build BEFORE committing** (if no conflicts occurred):
 
-   **Quick module compilation** (fast iteration):
-   ```bash
-   # Compile only the affected subdirectory/module
-   make -j$(nproc) fs/ext4/
-   # Or use M= for specific paths
-   make -j$(nproc) M=fs/ext4
-   ```
-   This quickly tests whether the modified kernel module compiles correctly.
-
    **Full kernel build** (required before commit):
    ```bash
    make -j$(nproc)
    ```
-   ⚠️ **Complete kernel build is required before committing** to ensure the linking process works correctly. Module-only compilation does not catch all issues.
+   ⚠️ **Complete kernel build is mandatory before committing**. You must compile the entire kernel, not just the modified modules. Partial compilation is not allowed as it may miss linking errors and other issues.
 
    **Do NOT proceed if build fails**. Fix issues first:
    - Adjust the code to resolve build errors
@@ -151,9 +168,9 @@ When conflicts occur:
 ## Quality Checklist
 
 Before finalizing:
+- [ ] Both target and reference branches configured and compile successfully (Phase 0)
 - [ ] Plan was reviewed and approved by user
 - [ ] All commits processed one-by-one
-- [ ] Each commit: quick module compilation passed
 - [ ] Each commit: full kernel build passed before committing
 - [ ] Commit messages follow conventions
 - [ ] Final kernel builds successfully
@@ -191,11 +208,7 @@ git cherry-pick --continue
 # Abort if needed
 git cherry-pick --abort
 
-# Quick module compilation (fast iteration)
-make -j$(nproc) fs/ext4/
-make -j$(nproc) M=drivers/net
-
-# Full kernel build (required before commit)
+# Full kernel build (mandatory before commit)
 make -j$(nproc)
 
 # Find symbol introduction

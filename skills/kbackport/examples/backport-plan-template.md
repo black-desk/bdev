@@ -84,27 +84,38 @@ Date:   [date]
 
 ## Execution Plan
 
+### Phase 0: Environment Preparation
+
 ```bash
-# 1. Ensure we're on the target branch
+# 1. Verify target branch compiles
 git checkout [target-branch]
+make olddefconfig  # or appropriate configuration method
+make -j$(nproc)    # must compile successfully
 
-# 2. Create a working branch for the backport
+# 2. Verify reference branch compiles
+git checkout [reference-branch]
+make olddefconfig  # or appropriate configuration method
+make -j$(nproc)    # must compile successfully
+
+# 3. Return to target branch and create working branch
+git checkout [target-branch]
 git checkout -b backport/[feature-name]-[date]
+```
 
-# 3. Cherry-pick in order (with -x to record origin)
+### Phase 1: Cherry-pick Execution
+
+```bash
+# Cherry-pick in order (with -x to record origin)
 git cherry-pick -x abc12345
 git cherry-pick -x def67890
 git cherry-pick -x target001
 git cherry-pick -x target002
 
-# 4. Build and test
-# Quick module compilation for fast iteration
-make -j$(nproc) <modified-path>/  # e.g., make -j$(nproc) fs/ext4/
-
-# Full kernel build (required before commit to verify linking)
+# After each cherry-pick, before committing:
+# Full kernel build (mandatory - no partial compilation allowed)
 make -j$(nproc)
 
-# 5. Run relevant tests
+# Run relevant tests
 # [specific test commands if applicable]
 ```
 
@@ -124,10 +135,13 @@ make -j$(nproc)
 
 ## Verification Checklist
 
+Before starting backport:
+- [ ] Target branch configured and compiles successfully
+- [ ] Reference branch configured and compiles successfully
+
 After completing the backport:
 
 - [ ] All commits applied successfully
-- [ ] Each commit: quick module compilation passed (`make -j$(nproc) <path>/`)
 - [ ] Each commit: full kernel build passed before committing (`make -j$(nproc)`)
 - [ ] No new compiler warnings introduced
 - [ ] Relevant tests pass
