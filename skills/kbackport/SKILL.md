@@ -22,13 +22,14 @@ Guide for backporting commits between Linux kernel branches with careful depende
 
 1. **Identify commits**: Gather source branch, target branch, and commit list
 2. **Analyze dependencies**: Use the `backport-dependency-analyzer` agent to identify prerequisite commits
-3. **Generate plan document** containing:
+3. **Present dependency analysis report to user**: **必须将依赖分析报告完整展示给用户审核**，让用户确认依赖关系是否正确、是否有遗漏或误判
+4. **Generate plan document** containing:
    - Complete commit chain (including dependencies)
    - Backport order
    - Potential conflicts
    - Execution commands
-4. **Present plan to user for approval**
-5. **Only proceed after explicit user confirmation**
+5. **Present plan to user for approval**
+6. **Only proceed after explicit user confirmation**
 
 ### Phase 2: Execution (After Approval)
 
@@ -52,11 +53,21 @@ For **each commit**:
    **Do NOT proceed if the agent reports failure**. Handle missing dependencies first.
 
 3. **Verify build BEFORE committing** (if no conflicts occurred):
+
+   **Quick module compilation** (fast iteration):
    ```bash
-   make -j$(nproc) M=<modified-path>
-   # Or full build if needed
+   # Compile only the affected subdirectory/module
+   make -j$(nproc) fs/ext4/
+   # Or use M= for specific paths
+   make -j$(nproc) M=fs/ext4
+   ```
+   This quickly tests whether the modified kernel module compiles correctly.
+
+   **Full kernel build** (required before commit):
+   ```bash
    make -j$(nproc)
    ```
+   ⚠️ **Complete kernel build is required before committing** to ensure the linking process works correctly. Module-only compilation does not catch all issues.
 
    **Do NOT proceed if build fails**. Fix issues first:
    - Adjust the code to resolve build errors
@@ -142,7 +153,8 @@ When conflicts occur:
 Before finalizing:
 - [ ] Plan was reviewed and approved by user
 - [ ] All commits processed one-by-one
-- [ ] Each commit compiles before proceeding
+- [ ] Each commit: quick module compilation passed
+- [ ] Each commit: full kernel build passed before committing
 - [ ] Commit messages follow conventions
 - [ ] Final kernel builds successfully
 - [ ] Relevant tests pass
@@ -179,8 +191,12 @@ git cherry-pick --continue
 # Abort if needed
 git cherry-pick --abort
 
-# Build specific path
+# Quick module compilation (fast iteration)
+make -j$(nproc) fs/ext4/
 make -j$(nproc) M=drivers/net
+
+# Full kernel build (required before commit)
+make -j$(nproc)
 
 # Find symbol introduction
 git log -p --all -S 'function_name' -- <path>

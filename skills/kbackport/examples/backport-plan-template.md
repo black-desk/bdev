@@ -98,7 +98,11 @@ git cherry-pick -x target001
 git cherry-pick -x target002
 
 # 4. Build and test
-make olddefconfig && make -j$(nproc)
+# Quick module compilation for fast iteration
+make -j$(nproc) <modified-path>/  # e.g., make -j$(nproc) fs/ext4/
+
+# Full kernel build (required before commit to verify linking)
+make -j$(nproc)
 
 # 5. Run relevant tests
 # [specific test commands if applicable]
@@ -123,7 +127,8 @@ make olddefconfig && make -j$(nproc)
 After completing the backport:
 
 - [ ] All commits applied successfully
-- [ ] Kernel compiles without errors
+- [ ] Each commit: quick module compilation passed (`make -j$(nproc) <path>/`)
+- [ ] Each commit: full kernel build passed before committing (`make -j$(nproc)`)
 - [ ] No new compiler warnings introduced
 - [ ] Relevant tests pass
 - [ ] Original functionality preserved
