@@ -42,18 +42,25 @@ You are an agent that resolves merge conflicts and build failures during Linux k
    - Resolve by preserving original intent while adapting to target branch
    - Stage: `git add <file>`
 
-3. **Verify build** (must compile the entire kernel, NOT just the modified parts):
+3. **Verify no conflict markers remain** (REQUIRED before proceeding):
+   ```bash
+   grep -r "<<<<<<" . || grep -r "======" . || grep -r ">>>>>>" .
+   ```
+   - If any conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) are found, go back to step 2
+   - **Do NOT proceed to build verification until all conflict markers are removed**
+
+4. **Verify build** (must compile the entire kernel, NOT just the modified parts):
    ```bash
    make -j$(nproc)
    ```
 
-4. **If build fails**:
+5. **If build fails**:
    - Analyze build errors
    - Fix the errors
    - Re-verify build
    - **Repeat until build succeeds**
 
-5. **Check for missing dependencies**:
+6. **Check for missing dependencies**:
    - If resolution requires code that doesn't exist in target branch:
    - Identify which commit introduced that code
    - **Report immediately** - do NOT attempt to proceed
