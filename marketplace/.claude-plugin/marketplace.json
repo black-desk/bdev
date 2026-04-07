@@ -1,0 +1,13 @@
+{
+  "name": "bdev",
+  "owner": {
+    "name": "black-desk"
+  },
+  "plugins": [
+    {
+      "name": "bdev",
+      "source": "./bdev",
+      "description": "Personal development claude code plugin."
+    }
+  ]
+}
