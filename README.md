@@ -1,5 +1,7 @@
 # bdev
 
+en | [zh_CN](README.zh_CN.md)
+
 Personal development toolkit for [Claude Code](https://code.claude.com).
 
 ## Install
