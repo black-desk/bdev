@@ -7,20 +7,13 @@ Personal development toolkit for [Claude Code](https://code.claude.com).
 In Claude Code, run:
 
 ```
-/plugin marketplace add black-desk/bdev
+/plugin
 ```
 
-This adds the `bdev` marketplace, which provides access to the plugin.
+1. Add marketplace black-desk/bdev;
+2. Install bdev plugin.
 
-```
-/plugin install bdev@bdev
-```
-
-And then reload plugins:
-
-```
-/reload-plugins
-```
+And then restart claude code.
 
 That's it. The plugin's skills and agents are now available in your Claude Code
 session.
