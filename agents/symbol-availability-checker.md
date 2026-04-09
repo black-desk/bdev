@@ -1,7 +1,7 @@
 ---
 name: symbol-availability-checker
 description: |
-  Use this agent when one or more symbols (functions, structs, macros, variables, constants, struct members) need to be checked for existence in a target codebase or git worktree.
+  This agent should be used when one or more symbols (functions, structs, macros, variables, constants, struct members) need to be checked for existence in a target codebase or git worktree.
 
   Useful for: dependency checking, API availability analysis, migration planning, or verifying symbol presence before porting code.
 

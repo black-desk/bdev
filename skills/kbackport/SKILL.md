@@ -216,11 +216,20 @@ The agent will:
 4. Update commit message
 5. Complete the cherry-pick
 
-**If the agent reports failure** (missing dependency):
-- The agent will identify the missing commit
-- Add the missing commit to the backport queue
-- Re-run dependency analysis if needed
-- Do NOT proceed to next commit until current one succeeds
+**If the agent reports failure due to missing infrastructure**, handle as follows:
+
+The initial symbol-based dependency analysis in Phase 1 may not catch all prerequisite commits. When `backport-executor` encounters a conflict it cannot resolve because required code infrastructure (functions, structs, macros, etc.) is absent in the target branch, it will report back with a list of **missing symbols**.
+
+When this happens, perform a **dependency re-analysis loop**:
+
+1. **Collect missing symbols** from the agent's failure report
+2. **Re-run Phase 1.5** — check which of the reported symbols are actually missing in the target worktree
+3. **Re-run Phase 1.6** — find origin commits for the newly discovered missing symbols, using the same fork point for search optimization
+4. **Re-run Phase 1.7** — add the newly found prerequisite commits to the existing set, and re-sort the full commit list in topological order
+5. **Present the updated backport order** to the user for approval, highlighting the newly added commits
+6. **Resume execution** from the first unprocessed commit in the updated order — do NOT re-process commits that already succeeded
+
+Do NOT proceed to the next commit in the queue until the current failure is resolved.
 
 ---
 
@@ -240,6 +249,7 @@ Before finalizing:
 - [ ] Kconfig options related to backport content identified and enabled (Phase 2)
 - [ ] Both target and reference worktrees configured and compile successfully (Phase 2)
 - [ ] All commits processed one-by-one
+- [ ] If backport-executor reported missing symbols, dependency re-analysis was performed and new prerequisite commits were added and re-sorted
 - [ ] Each commit: full kernel build passed before committing
 - [ ] Commit messages follow conventions
 - [ ] Final kernel builds successfully

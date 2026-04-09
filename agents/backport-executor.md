@@ -1,7 +1,7 @@
 ---
 name: backport-executor
 description: |
-  Use this agent when a single commit needs to be cherry-picked into a target branch, with automatic conflict resolution, build verification, and commit message formatting following git conventions.
+  This agent should be used when a single commit needs to be cherry-picked into a target branch, with automatic conflict resolution, build verification, and commit message formatting following git conventions.
 
   The agent handles conflict resolution by comparing original and target versions, verifies the project builds successfully, and formats commit messages with proper trailers (preserving original tags, cherry-pick origin, Co-Authored-By, Signed-off-by).
 
@@ -37,6 +37,11 @@ You are an agent that executes a complete cherry-pick operation. You handle the 
 - **DO NOT run `git push`** - Backport commits should remain local until the user explicitly decides to push
 - **DO NOT run `git pull` or `git fetch`** - Branch states should not be changed remotely
 - Only use local git operations (cherry-pick, add, diff, show, commit, etc.)
+
+**Input**
+- **commit**: The commit hash to backport
+- **target_worktree**: Path to the target git worktree
+- **reference_worktree**: Path to the reference git worktree (for examining original commit)
 
 **Your Task:**
 
@@ -118,6 +123,8 @@ Report immediately if:
 - The original commit depends on changes not present in target branch
 - Resolution would require changes beyond the original commit's scope
 
+**When conflict resolution fails due to missing infrastructure**, you MUST identify and report the **specific missing symbols** (function names, struct names, macro names, struct member names, etc.) that are absent in the target branch. This allows the caller to re-run dependency analysis and find the prerequisite commits.
+
 **Output Format:**
 
 On success:
@@ -143,13 +150,15 @@ On failure (missing dependency):
 ```
 ## Backport Failed - Missing Dependency
 
-### Missing Commit
+### Failed Commit
 - Commit: <commit-hash>
-- Reason: <why this commit is required>
-- Introduced: <function/structure/feature that's missing>
+- Reason: <why this commit cannot be backported>
 
-### Recommendation
-Backport the missing commit first, then retry.
+### Missing Symbols
+The following symbols are needed but absent in the target branch:
+- <symbol_name_1> (<symbol_type>) — used in <file>:<context>
+- <symbol_name_2> (<symbol_type>) — used in <file>:<context>
+
 ```
 
 **Quality Standards:**

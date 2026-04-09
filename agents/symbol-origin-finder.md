@@ -1,7 +1,7 @@
 ---
 name: symbol-origin-finder
 description: |
-  Use this agent when the origin commit of a **single symbol** (function, macro, variable, constant, structure, or structure member) needs to be found, or when its significant modification history through git needs to be traced.
+  This agent should be used when the origin commit of a **single symbol** (function, macro, variable, constant, structure, or structure member) needs to be found, or when its significant modification history through git needs to be traced.
 
   Useful for: code archaeology, understanding symbol evolution, tracing API changes across versions, or identifying commits related to a specific symbol.
 

@@ -10,13 +10,13 @@ description: Create a new project from a template repository by replacing placeh
    ```
 
 2. Read all files in the project. Understand project struct.
-   Use avaiable scripts in project or any other command line tools lookings for:
+   Use available scripts in project or any other command line tools looking for:
 
    1. TODOs
-   2. Strings that need to be replaced, such asi
+   2. Strings that need to be replaced, such as
       "template", "YOUR NAME", and other obvious placeholder text.
 
-3. You should replace those stirngs with the actual project name.
+3. You should replace those strings with the actual project name.
 
-4. Recheck check TODOs in the project to
+4. Recheck TODOs in the project to
    ensure you have completed all TODOs related to the project name.

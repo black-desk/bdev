@@ -1,7 +1,7 @@
 ---
 name: commit-symbol-analyzer
 description: |
-  Use this agent when a **single commit** needs to be analyzed to extract all symbols used in its code changes.
+  This agent should be used when a **single commit** needs to be analyzed to extract all symbols used in its code changes.
 
   Useful for: dependency analysis before backporting, understanding what external APIs/functions a commit relies on, or auditing symbol usage in patches.
 
