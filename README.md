@@ -14,24 +14,16 @@ SPDX-License-Identifier: MIT
 
 [badge-shields-io-checks]:
   https://img.shields.io/github/check-runs/black-desk/bdev/master
-
 [actions]: https://github.com/black-desk/bdev/actions
-
 [badge-shields-io-commit-activity]:
   https://img.shields.io/github/commit-activity/w/black-desk/bdev/master
-
 [commits]: https://github.com/black-desk/bdev/commits/master
-
 [badge-shields-io-contributors]:
   https://img.shields.io/github/contributors/black-desk/bdev
-
 [contributors]: https://github.com/black-desk/bdev/graphs/contributors
-
 [badge-shields-io-release-date]:
   https://img.shields.io/github/release-date/black-desk/bdev
-
 [releases]: https://github.com/black-desk/bdev/releases
-
 [badge-shields-io-commits-since-release]:
   https://img.shields.io/github/commits-since/black-desk/bdev/latest
 
@@ -55,31 +47,21 @@ In Claude Code, run:
 1. Add marketplace black-desk/bdev;
 2. Install bdev plugin.
 
-And then restart claude code.
+And then restart Claude Code.
 
-That's it. The plugin's skills and agents are now available in your Claude Code
-session.
+That's it. The plugin's skills and agents are now available in your Claude Code session.
 
 ## Verify installation
 
-Run `/plugin` and check the **Installed** tab. You should see `bdev@bdev`
-listed.
+Run `/plugin` and check the **Installed** tab. You should see `bdev` listed.
 
-## Update
+## Contribution notes
 
-To get the latest version:
+The markdown files in this project are provided in both Chinese and English versions for easier Chinese maintenance.
 
-```
-/plugin marketplace update bdev
-/plugin install bdev@bdev
-/reload-plugins
-```
+Except for README which has links to the other language version, other skill and agent files do not have such links.
 
-## Uninstall
-
-```
-/plugin uninstall bdev@bdev
-```
+Because essentially those documents are for Claude Code to read.
 
 ## License
 

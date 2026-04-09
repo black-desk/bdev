@@ -14,24 +14,16 @@ SPDX-License-Identifier: MIT
 
 [badge-shields-io-checks]:
   https://img.shields.io/github/check-runs/black-desk/bdev/master
-
 [actions]: https://github.com/black-desk/bdev/actions
-
 [badge-shields-io-commit-activity]:
   https://img.shields.io/github/commit-activity/w/black-desk/bdev/master
-
 [commits]: https://github.com/black-desk/bdev/commits/master
-
 [badge-shields-io-contributors]:
   https://img.shields.io/github/contributors/black-desk/bdev
-
 [contributors]: https://github.com/black-desk/bdev/graphs/contributors
-
 [badge-shields-io-release-date]:
   https://img.shields.io/github/release-date/black-desk/bdev
-
 [releases]: https://github.com/black-desk/bdev/releases
-
 [badge-shields-io-commits-since-release]:
   https://img.shields.io/github/commits-since/black-desk/bdev/latest
 
@@ -56,23 +48,15 @@ SPDX-License-Identifier: MIT
 
 ## 验证安装
 
-运行 `/plugin` 并检查 **Installed** 标签页。你应该能看到 `bdev@bdev` 已列出。
+运行 `/plugin` 并检查 **Installed** 标签页。你应该能看到 `bdev` 已列出。
 
-## 更新
+## 贡献注意事项
 
-获取最新版本：
+本项目中的 markdown 文件为了方便用中文维护，都统一提供了中英两个语言的版本。
 
-```
-/plugin marketplace update bdev
-/plugin install bdev@bdev
-/reload-plugins
-```
+其中除了 README 有指向另一语言版本的链接以外其他 skill 和 agent 文件都没有这种链接。
 
-## 卸载
-
-```
-/plugin uninstall bdev@bdev
-```
+因为本质上那些文档是给 claude code 读的。
 
 ## 许可证
 
