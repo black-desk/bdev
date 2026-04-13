@@ -1,6 +1,6 @@
 {
   "name": "bdev",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Personal development toolkit for Linux kernel development and backport workflows",
   "author": {
     "name": "black_desk"
