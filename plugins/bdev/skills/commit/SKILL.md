@@ -15,7 +15,16 @@ other modifications produced by an AI assistant), add a Co-Author trailer
 at the very end of the commit message, after the LLM disclaimer:
 
 ```
-Co-Authored-By: Claude Code (<Your model name>) <noreply@anthropic.com>
+Assisted-by: <Your agent name>:<Your model name>
+Signed-off-by: User name <User email>
+```
+
+For example:
+
+
+```
+Assisted-by: Claude Code:glm-5.1
+Signed-off-by: Chen Linxuan <me@black-desk.cn>
 ```
 
 If you are unsure whether the changes contain LLM-generated parts, ask the user

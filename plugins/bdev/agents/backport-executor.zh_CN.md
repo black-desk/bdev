@@ -104,6 +104,6 @@ hooks:
 
    [ User Name: 说明你应用的非平凡更改。如果存在 cherry-pick 冲突，则此项为必需。]
 
-   Co-Authored-By: Claude Code (model name) <noreply@anthropic.com>
+   Assisted-by: AGENT_NAME:MODEL_VERSION
    Signed-off-by: User Name <user@email>
    ```

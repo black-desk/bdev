@@ -11,7 +11,16 @@ description: 使用精心编写的 commit message 提交已暂存或未暂存的
 如果提交的更改包含 LLM 生成的内容（由 AI 助手生成的代码、文本或其他修改），在 commit message 的最末尾、LLM 免责声明之后添加 Co-Author trailer：
 
 ```
-Co-Authored-By: Claude Code (<Your model name>) <noreply@anthropic.com>
+Assisted-by: <Your agent name>:<Your model name>
+Signed-off-by: User name <User email>
+```
+
+例如：
+
+
+```
+Assisted-by: Claude Code:glm-5.1
+Signed-off-by: Chen Linxuan <me@black-desk.cn>
 ```
 
 如果你不确定更改是否包含 LLM 生成的部分，请在继续之前询问用户。
