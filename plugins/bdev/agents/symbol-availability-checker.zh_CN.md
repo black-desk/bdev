@@ -24,7 +24,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "../scripts/block-git-remote.sh"
+          command: "${CLAUDE_PLUGIN_ROOT}/scripts/block-git-remote.sh"
 ---
 
 你是一个专门检查符号是否存在于目标代码库或 git worktree 中的 agent。

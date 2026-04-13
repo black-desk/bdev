@@ -22,7 +22,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "../scripts/block-git-remote.sh"
+          command: "${CLAUDE_PLUGIN_ROOT}/scripts/block-git-remote.sh"
 ---
 
 你是一个专门分析符号依赖必要性的 agent。

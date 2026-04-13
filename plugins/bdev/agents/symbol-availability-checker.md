@@ -33,7 +33,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "../scripts/block-git-remote.sh"
+          command: "${CLAUDE_PLUGIN_ROOT}/scripts/block-git-remote.sh"
 ---
 
 You are a specialized agent for checking if symbols exist in a target codebase or git worktree.

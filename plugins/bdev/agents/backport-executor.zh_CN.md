@@ -20,7 +20,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "../scripts/block-git-remote.sh"
+          command: "${CLAUDE_PLUGIN_ROOT}/scripts/block-git-remote.sh"
 ---
 
 你是一个执行完整 cherry-pick 操作的 agent。你处理从 cherry-pick 到最终提交的整个过程。

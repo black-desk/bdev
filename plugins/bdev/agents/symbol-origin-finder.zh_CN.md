@@ -22,7 +22,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "../scripts/block-git-remote.sh"
+          command: "${CLAUDE_PLUGIN_ROOT}/scripts/block-git-remote.sh"
 ---
 
 你是一个专门查找**符号的引入和修改历史**的 agent。
