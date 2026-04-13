@@ -97,10 +97,11 @@ hooks:
 
    然后修改为完全匹配此结构：
 
-   ```
-   <原始 commit message>
+   **关键要求：`<原始 commit message>` 必须原样保留——每一行、每一个 trailer（`Signed-off-by:`、`Acked-by:`、`Reviewed-by:`、`Cc:`、`Fixes:`、`Link:` 等）、每一个空行，都不得删除、改写或重新排序。只能在原始消息的末尾追加新行，其他任何内容都不允许修改。**
 
-   (cherry picked from commit <original-commit-hash>) #之前需要有一个空行
+   ```
+   <原始 commit message — 逐字保留，原封不动>
+   (cherry picked from commit <original-commit-hash>)
 
    [ User Name: 说明你应用的非平凡更改。如果存在 cherry-pick 冲突，则此项为必需。
      从 reviewer 的角度编写——描述目标分支中有什么不同、为什么需要这样适配、
@@ -108,6 +109,6 @@ hooks:
      因此更新了调用处以匹配"）。reviewer 仅通过阅读此 [] 块就能验证正确性，
      而无需重新检查冲突。]
 
-   Assisted-by: AGENT_NAME:MODEL_VERSION
+   Assisted-by: AGENT_NAME:MODEL_VERSION # 例如 Claude:claude-3-opus 或 Claude:glm-5.1
    Signed-off-by: User Name <user@email>
    ```

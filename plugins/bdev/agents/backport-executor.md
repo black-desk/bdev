@@ -97,10 +97,11 @@ Execute the complete backport of a single commit:
 
    Then amend to match this structure exactly:
 
-   ```
-   <Original commit message>
+   **CRITICAL: The `<Original commit message>` must be preserved VERBATIM — every line, every trailer (`Signed-off-by:`, `Acked-by:`, `Reviewed-by:`, `Cc:`, `Fixes:`, `Link:`, etc.), every blank line. Do NOT delete, reword, or reorder anything. You may ONLY append new lines after the original message.**
 
-   (cherry picked from commit <original-commit-hash>) # requires a blank line before
+   ```
+   <Original commit message — preserved exactly, character for character>
+   (cherry picked from commit <original-commit-hash>)
 
    [ User Name: Explain non-trivial changes you have applied. This is required
      if there was a cherry-pick conflict. Write from the reviewer's perspective —
@@ -110,6 +111,6 @@ Execute the complete backport of a single commit:
      A reviewer reading only this [] block should be able to verify correctness
      without re-examining the conflict. ]
 
-   Co-Authored-By: Claude Code (model name) <noreply@anthropic.com>
+   Assisted-by: AGENT_NAME:MODEL_VERSION # Like Claude:claude-3-opus or Claude:glm-5.1
    Signed-off-by: User Name <user@email>
    ```
