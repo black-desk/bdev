@@ -102,7 +102,11 @@ hooks:
 
    (cherry picked from commit <original-commit-hash>) #之前需要有一个空行
 
-   [ User Name: 说明你应用的非平凡更改。如果存在 cherry-pick 冲突，则此项为必需。]
+   [ User Name: 说明你应用的非平凡更改。如果存在 cherry-pick 冲突，则此项为必需。
+     从 reviewer 的角度编写——描述目标分支中有什么不同、为什么需要这样适配、
+     以及支持你做法的依据（例如"函数 foo() 在 commit xyz123 中被重命名为 bar()，
+     因此更新了调用处以匹配"）。reviewer 仅通过阅读此 [] 块就能验证正确性，
+     而无需重新检查冲突。]
 
    Assisted-by: AGENT_NAME:MODEL_VERSION
    Signed-off-by: User Name <user@email>

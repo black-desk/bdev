@@ -104,14 +104,23 @@ git rev-list --topo-order --reverse "$BASE"..HEAD | grep -F -f /tmp/commits.txt
 
 按计划顺序**逐个**执行 commit。
 
-对于**每个** commit，调用 `backport-executor`：
+对于**每个** commit，通过 Agent 工具调用 `backport-executor`：
 
 ```
-Task(
+Agent(
   subagent_type="backport-executor",
   prompt="Backport commit <commit_hash> to worktree <target_worktree_path>. The original commit is available in reference worktree <reference_worktree_path>."
 )
 ```
+
+> **重要：主会话只负责编排，不执行具体工作。** Cherry-pick、冲突解决、构建验证和提交定稿都是 agent 的职责。不要在主会话中执行这些操作。
+>
+> **Agent 遇到临时错误时重试**：如果 agent 因临时错误（网络问题、API 限速、上下文窗口耗尽等）而失败，还原 worktree 状态后重新调用 agent：
+> ```bash
+> # 在目标 worktree 中
+> git cherry-pick --abort 2>/dev/null; git reset --hard HEAD
+> ```
+> 然后用相同的 prompt 重新调用 `backport-executor`。不要在主会话中尝试修复 agent 的工作。
 
 **如果 agent 因缺少基础设施而报告失败**，按以下方式处理：
 

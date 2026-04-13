@@ -104,14 +104,23 @@ Present the full dependency analysis report to the user for review, confirming t
 
 Execute commits **one at a time** in the planned order.
 
-For **each commit**, invoke `backport-executor`:
+For **each commit**, invoke `backport-executor` via the Agent tool:
 
 ```
-Task(
+Agent(
   subagent_type="backport-executor",
   prompt="Backport commit <commit_hash> to worktree <target_worktree_path>. The original commit is available in reference worktree <reference_worktree_path>."
 )
 ```
+
+> **Important: The main session must only orchestrate, not execute.** Cherry-pick, conflict resolution, build verification, and commit finalization are all agent responsibilities. Do not perform these operations in the main session.
+>
+> **Agent retry on transient failures**: If the agent fails due to transient errors (network issues, API rate limits, context window exhaustion, etc.), restore the worktree state and re-invoke the agent:
+> ```bash
+> # In the target worktree
+> git cherry-pick --abort 2>/dev/null; git reset --hard HEAD
+> ```
+> Then re-invoke `backport-executor` with the same prompt. Do not attempt to fix the agent's work in the main session.
 
 **If the agent reports failure due to missing infrastructure**, handle as follows:
 

@@ -103,7 +103,12 @@ Execute the complete backport of a single commit:
    (cherry picked from commit <original-commit-hash>) # requires a blank line before
 
    [ User Name: Explain non-trivial changes you have applied. This is required
-     if there was a cherry-pick conflict. ]
+     if there was a cherry-pick conflict. Write from the reviewer's perspective —
+     describe what was different in the target branch, why your adaptation was
+     necessary, and what evidence supports your approach (e.g., "function foo()
+     was renamed to bar() in commit xyz123, so I updated the call site to match").
+     A reviewer reading only this [] block should be able to verify correctness
+     without re-examining the conflict. ]
 
    Co-Authored-By: Claude Code (model name) <noreply@anthropic.com>
    Signed-off-by: User Name <user@email>
