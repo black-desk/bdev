@@ -11,20 +11,17 @@ When user asks to commit changes, follow this process:
    might be wrong." to the commit message body.
 
 If the changes being committed contain LLM-generated content (code, text, or
-other modifications produced by an AI assistant), add a Co-Author trailer
+other modifications produced by an AI assistant), add a Assisted-by trailer
 at the very end of the commit message, after the LLM disclaimer:
 
 ```
 Assisted-by: <Your agent name>:<Your model name>
-Signed-off-by: User name <User email>
 ```
 
 For example:
 
-
 ```
-Assisted-by: Claude Code:glm-5.1
-Signed-off-by: Chen Linxuan <me@black-desk.cn>
+Assisted-by: Claude:glm-5.1 # Or Claude:claude-3-opus
 ```
 
 If you are unsure whether the changes contain LLM-generated parts, ask the user
