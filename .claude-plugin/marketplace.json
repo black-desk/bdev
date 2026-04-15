@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "bdev",
-      "source": "./plugins/bdev",
+      "source": "./",
       "description": "My personal development claude code plugin."
     }
   ]
